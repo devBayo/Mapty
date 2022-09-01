@@ -73,6 +73,7 @@ const allInputs = document.querySelectorAll('input');
 class App {
   #map;
   #mapEvent;
+  #mapZoomLevel = 13;
   #workouts = [];
 
   constructor() {
@@ -83,6 +84,7 @@ class App {
     document
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -100,7 +102,7 @@ class App {
 
     // displaying map using leaflet
     const coords = [latitude, longitude];
-    this.#map = L.map('map').setView(coords, 13);
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
@@ -230,6 +232,19 @@ class App {
       )
       .setPopupContent(`${workout.description}`)
       .openPopup();
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+    if (!workoutEl) return;
+    const workout = this.#workouts.find(el => el.id === workoutEl.dataset.id);
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
   }
 
   _makeFieldsRequired() {
