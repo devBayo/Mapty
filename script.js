@@ -15,16 +15,17 @@ class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
 
-  constructor(coords, distance, duration) {
+  constructor(coords, distance, duration, type) {
     this.coords = coords; // [lat, lng]
     this.distance = distance; // in km
     this.duration = duration; // in min
+    this.type = type; // in min
   }
 }
 
 class Running extends Workout {
-  constructor(coords, distance, duration, cadence) {
-    super(coords, distance, duration);
+  constructor(coords, distance, duration, type, cadence) {
+    super(coords, distance, duration, type);
     this.cadence = cadence;
     this.calcPace();
   }
@@ -37,8 +38,8 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
-  constructor(coords, distance, duration, elevationGain) {
-    super(coords, distance, duration);
+  constructor(coords, distance, duration, type, elevationGain) {
+    super(coords, distance, duration, type);
     this.elevationGain = elevationGain;
     this.calcSpeed();
   }
@@ -60,6 +61,7 @@ class Cycling extends Workout {
 class App {
   #map;
   #mapEvent;
+  #workouts = [];
 
   constructor() {
     this._getPosition();
@@ -109,9 +111,43 @@ class App {
 
   _newWorkout(e) {
     e.preventDefault();
-    form.reset();
 
+    // Get data from form
+    const type = inputType.value;
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
     const { lat, lng } = this.#mapEvent.latlng;
+    let workout;
+
+    // If workout is running, create a running object
+    if (type === 'running') {
+      const cadence = +inputCadence.value;
+      // Check if data is valid (validation has been handled in html already)
+      workout = new Running([lat, lng], distance, duration, type, cadence);
+    }
+
+    // If workout is cycling, create a cycling object
+    if (type === 'cycling') {
+      const elevation = +inputElevation.value;
+
+      // Check if data is valid (validation has been handled in html already)
+      workout = new Cycling([lat, lng], distance, duration, type, elevation);
+    }
+
+    // Add new object to workout array
+    this.#workouts.push(workout);
+    console.log(workout);
+
+    // Render workout on the list
+    this.renderWorkout(workout);
+
+    // Hide form + clear form fields
+    form.reset();
+    form.classList.add('hidden');
+  }
+
+  renderWorkout(workout) {
+    const [lat, lng] = workout.coords;
     L.marker([lat, lng])
       .addTo(this.#map)
       .bindPopup(
@@ -120,13 +156,11 @@ class App {
           minWidth: 100,
           autoClose: false,
           closeOnClick: false,
-          className: 'running-popup',
+          className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent('Workout')
+      .setPopupContent(workout.distance + '')
       .openPopup();
-
-    form.classList.add('hidden');
   }
 }
 
