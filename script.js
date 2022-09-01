@@ -71,8 +71,6 @@ class Cycling extends Workout {
   }
 }
 
-const allInputs = document.querySelectorAll('input');
-
 ////////////////////////
 // Applying Architechture
 class App {
