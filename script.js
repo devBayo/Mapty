@@ -15,17 +15,18 @@ class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
 
-  constructor(coords, distance, duration, type) {
+  constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
     this.distance = distance; // in km
     this.duration = duration; // in min
-    this.type = type; // in min
   }
 }
 
 class Running extends Workout {
-  constructor(coords, distance, duration, type, cadence) {
-    super(coords, distance, duration, type);
+  type = 'running';
+
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration);
     this.cadence = cadence;
     this.calcPace();
   }
@@ -38,8 +39,10 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
-  constructor(coords, distance, duration, type, elevationGain) {
-    super(coords, distance, duration, type);
+  type = 'cycling';
+
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
     this.elevationGain = elevationGain;
     this.calcSpeed();
   }
@@ -123,7 +126,7 @@ class App {
     if (type === 'running') {
       const cadence = +inputCadence.value;
       // Check if data is valid (validation has been handled in html already)
-      workout = new Running([lat, lng], distance, duration, type, cadence);
+      workout = new Running([lat, lng], distance, duration, cadence);
     }
 
     // If workout is cycling, create a cycling object
@@ -131,7 +134,7 @@ class App {
       const elevation = +inputElevation.value;
 
       // Check if data is valid (validation has been handled in html already)
-      workout = new Cycling([lat, lng], distance, duration, type, elevation);
+      workout = new Cycling([lat, lng], distance, duration, elevation);
     }
 
     // Add new object to workout array
