@@ -44,19 +44,28 @@
           </div>
           <div class="form__row">
             <label class="form__label">Distance</label>
-            <input class="form__input form__input--distance" placeholder="km" />
+            <input
+              class="form__input form__input--distance"
+              type="number"
+              min="1"
+              placeholder="km"
+            />
           </div>
           <div class="form__row">
             <label class="form__label">Duration</label>
             <input
               class="form__input form__input--duration"
+              type="number"
               placeholder="min"
+              min="1"
             />
           </div>
           <div class="form__row">
             <label class="form__label">Cadence</label>
             <input
               class="form__input form__input--cadence"
+              type="number"
+              min="1"
               placeholder="step/min"
             />
           </div>
@@ -64,6 +73,7 @@
             <label class="form__label">Elev Gain</label>
             <input
               class="form__input form__input--elevation"
+              type="number"
               placeholder="meters"
             />
           </div>
