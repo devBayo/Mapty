@@ -21,7 +21,7 @@ class Workout {
   _setDescription() {
     const workoutDate = new Intl.DateTimeFormat(navigator.language, {
       month: 'long',
-      day: '2-digit',
+      day: 'numeric',
     }).format(this.date);
 
     this.description = `${this.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} 
@@ -118,6 +118,14 @@ class App {
     inputDistance.focus();
   }
 
+  _hideForm() {
+    form.reset();
+    form.style.display = 'none';
+    form.classList.add('hidden');
+
+    setTimeout(() => (form.style.display = 'grid'), 1000);
+  }
+
   _toggleElevationField() {
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
@@ -162,8 +170,7 @@ class App {
     this._renderWorkoutMarker(workout);
 
     // Hide form + clear form fields
-    form.reset();
-    form.classList.add('hidden');
+    this._hideForm();
 
     // Hide elevationField
     this._hideElvationField();
