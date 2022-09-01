@@ -117,6 +117,11 @@ class App {
     this._preventHtmlError();
   }
 
+  _hideElvationField() {
+    inputCadence.closest('.form__row').classList.remove('form__row--hidden');
+    inputElevation.closest('.form__row').classList.add('form__row--hidden');
+  }
+
   _newWorkout(e) {
     e.preventDefault();
 
@@ -152,6 +157,9 @@ class App {
     // Hide form + clear form fields
     form.reset();
     form.classList.add('hidden');
+
+    // Hide elevationField
+    this._hideElvationField();
   }
 
   _renderWorkout(workout) {
