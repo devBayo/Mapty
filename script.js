@@ -59,6 +59,8 @@ class Cycling extends Workout {
 
 // console.log(run1, cycling1);
 
+const allInputs = document.querySelectorAll('input');
+
 ////////////////////////
 // Applying Architechture
 class App {
@@ -131,25 +133,86 @@ class App {
 
     // If workout is cycling, create a cycling object
     if (type === 'cycling') {
-      const elevation = +inputElevation.value;
+      const elevationGain = +inputElevation.value;
 
       // Check if data is valid (validation has been handled in html already)
-      workout = new Cycling([lat, lng], distance, duration, elevation);
+      workout = new Cycling([lat, lng], distance, duration, elevationGain);
     }
 
     // Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
 
     // Render workout on the list
-    this.renderWorkout(workout);
+    this._renderWorkout(workout);
+    this._renderWorkoutMarker(workout);
 
     // Hide form + clear form fields
     form.reset();
     form.classList.add('hidden');
   }
 
-  renderWorkout(workout) {
+  _renderWorkout(workout) {
+    const capitalize = function (str) {
+      return str.replace(str[0], str[0].toUpperCase());
+    };
+
+    const {
+      type,
+      distance,
+      duration,
+      id,
+      cadence,
+      elevationGain,
+      pace,
+      speed,
+      date,
+    } = workout;
+
+    const workoutDate = new Intl.DateTimeFormat(navigator.language, {
+      month: 'long',
+      day: '2-digit',
+    }).format(date);
+
+    workout.content = `${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${capitalize(
+      type
+    )} on ${workoutDate}`;
+
+    const innerHtml = `
+    <h2 class="workout__title">${capitalize(type)} on ${workoutDate}</h2>
+      <div class="workout__details">
+        <span class="workout__icon">${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}</span>
+        <span class="workout__value">${distance}</span>
+        <span class="workout__unit">km</span>
+      </div>
+      <div class="workout__details">
+        <span class="workout__icon">⏱</span>
+        <span class="workout__value">${duration}</span>
+        <span class="workout__unit">min</span>
+      </div>
+      <div class="workout__details">
+        <span class="workout__icon">⚡️</span>
+        <span class="workout__value">${
+          type === 'running' ? cadence : elevationGain
+        }</span>
+        <span class="workout__unit">${
+          type === 'running' ? 'min/km' : 'km/h'
+        }</span>
+      </div>
+      <div class="workout__details">
+        <span class="workout__icon">${type === 'running' ? '🦶🏼' : '⛰'}</span>
+        <span class="workout__value">${type === 'running' ? pace : speed}</span>
+        <span class="workout__unit">${type === 'running' ? 'spm' : 'm'}</span>
+      </div>
+    `;
+
+    const el = document.createElement('li');
+    el.classList.add('workout', `workout--${type}`);
+    el.setAttribute('data-id', `${id}`);
+    el.innerHTML = innerHtml;
+    form.after(el);
+  }
+
+  _renderWorkoutMarker(workout) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -161,7 +224,7 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(workout.distance + '')
+      .setPopupContent(`${workout.content}`)
       .openPopup();
   }
 }
