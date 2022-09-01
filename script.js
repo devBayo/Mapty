@@ -11,6 +11,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -29,6 +30,10 @@ class Workout {
       this.type[0],
       this.type[0].toUpperCase()
     )} on ${workoutDate}`;
+  }
+
+  click() {
+    ++this.clicks;
   }
 }
 
@@ -78,8 +83,9 @@ class App {
 
   constructor() {
     this._getPosition();
-    form.addEventListener('submit', this._newWorkout.bind(this));
 
+    // Event Listeners
+    form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField.bind(this));
     document
       .querySelector('#map')
@@ -164,6 +170,7 @@ class App {
       workout = new Cycling([lat, lng], distance, duration, elevationGain);
     }
 
+    ////////////////////
     // Add new object to workout array
     this.#workouts.push(workout);
 
@@ -245,6 +252,7 @@ class App {
         duration: 1,
       },
     });
+    workout.click();
   }
 
   _makeFieldsRequired() {
