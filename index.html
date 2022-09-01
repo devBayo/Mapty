@@ -49,6 +49,7 @@
               type="number"
               min="1"
               placeholder="km"
+              required
             />
           </div>
           <div class="form__row">
@@ -58,23 +59,26 @@
               type="number"
               placeholder="min"
               min="1"
+              required
             />
           </div>
           <div class="form__row">
             <label class="form__label">Cadence</label>
             <input
-              class="form__input form__input--cadence"
+              class="form__input form__input--cadence form__input--validate"
               type="number"
               min="1"
               placeholder="step/min"
+              required
             />
           </div>
           <div class="form__row form__row--hidden">
             <label class="form__label">Elev Gain</label>
             <input
-              class="form__input form__input--elevation"
+              class="form__input form__input--elevation form__input--validate"
               type="number"
               placeholder="meters"
+              required
             />
           </div>
           <button class="form__btn">OK</button>

@@ -72,7 +72,10 @@ class App {
     this._getPosition();
     form.addEventListener('submit', this._newWorkout.bind(this));
 
-    inputType.addEventListener('change', this._toggleElevationField);
+    inputType.addEventListener('change', this._toggleElevationField.bind(this));
+    document
+      .querySelector('#map')
+      .addEventListener('click', this._preventHtmlError.bind(this));
   }
 
   _getPosition() {
@@ -110,8 +113,8 @@ class App {
 
   _toggleElevationField() {
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-
     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    this._preventHtmlError();
   }
 
   _newWorkout(e) {
@@ -226,6 +229,21 @@ class App {
       )
       .setPopupContent(`${workout.content}`)
       .openPopup();
+  }
+
+  _makeFieldsRequired() {
+    document
+      .querySelectorAll('.form__input--validate')
+      .forEach(input => input.setAttribute('required', ''));
+  }
+
+  _preventHtmlError() {
+    this._makeFieldsRequired();
+    const hiddenForm = document.querySelector('.form__row--hidden');
+
+    // remove required
+    const inputField = hiddenForm.querySelector('input');
+    inputField.removeAttribute('required');
   }
 }
 
