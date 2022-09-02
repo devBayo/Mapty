@@ -71,7 +71,7 @@ class Cycling extends Workout {
   }
 }
 
-////////////////////////
+/////////////////////////
 // Applying Architechture
 class App {
   #map;
