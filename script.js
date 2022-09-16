@@ -226,6 +226,8 @@ class App {
           }</span>
           <span class="workout__unit">${type === 'running' ? 'spm' : 'm'}</span>
         </div>
+
+        <button class="edit-button">Edit</button>
       </li>
     `;
 
@@ -296,6 +298,10 @@ class App {
   reset() {
     localStorage.removeItem('workouts');
     location.reload();
+  }
+
+  _editWork() {
+    
   }
 }
 
