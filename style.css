@@ -235,3 +235,9 @@ li {
   border: unset;
   background-color: var(--color-brand--2);
 }
+
+.form--edit {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
