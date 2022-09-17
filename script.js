@@ -369,6 +369,8 @@ class App {
     </form>
     `;
     el.insertAdjacentHTML('beforeend', html);
+
+    
   }
 }
 
