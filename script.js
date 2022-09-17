@@ -297,14 +297,21 @@ class App {
   }
 
   reset() {
+    // reset database
     localStorage.removeItem('workouts');
     location.reload();
   }
 
   _editWork(e) {
+    // Select workout
     if (!e.target.classList.contains('edit-button')) return;
     const button = e.target;
-    console.log(button);
+    const workoutEl = button.closest('.workout');
+    console.log(workoutEl);
+
+    // Display edit foorm
+    this._showForm();
+    console.log((inputDistance.value = 2));
   }
 }
 
