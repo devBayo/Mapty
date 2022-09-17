@@ -302,12 +302,9 @@ class App {
   }
 
   _editWork(e) {
-    console.log(e.target);
-
     if (!e.target.classList.contains('edit-button')) return;
     const button = e.target;
     console.log(button);
-    console.log('Button clicked');
   }
 }
 
