@@ -94,6 +94,7 @@ class App {
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
 
   _getPosition() {
@@ -300,7 +301,14 @@ class App {
     location.reload();
   }
 
-  _editWork() {}
+  _editWork(e) {
+    console.log(e.target);
+
+    if (!e.target.classList.contains('edit-button')) return;
+    const button = e.target;
+    console.log(button);
+    console.log('Button clicked');
+  }
 }
 
 const app = new App();
