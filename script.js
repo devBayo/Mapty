@@ -102,7 +102,8 @@ class App {
       navigator.geolocation.getCurrentPosition(
         this._loadMap.bind(this),
         function () {
-          alert('Could not get your position');
+          // Uncomment later
+          // alert('Could not get your position');
         }
       );
   }
@@ -310,8 +311,66 @@ class App {
     console.log(workoutEl);
 
     // Display edit foorm
-    this._showForm();
-    console.log((inputDistance.value = 2));
+    // this._showForm();
+    // console.log((inputDistance.value = 2));
+    this._renderEditForm(workoutEl);
+  }
+
+  _renderEditForm(el) {
+    const html = `
+      <form class="form form--edit">
+        <div class="form__row">
+          <label class="form__label">Type</label>
+          <select class="form__input form__input--type">
+            <option value="running">Running</option>
+            <option value="cycling">Cycling</option>
+          </select>
+        </div>
+        <div class="form__row">
+          <label class="form__label">Distance</label>
+          <input
+            class="form__input form__input--distance"
+            type="number"
+            min="1"
+            placeholder="km"
+            required
+          />
+        </div>
+        <div class="form__row">
+          <label class="form__label">Duration</label>
+          <input
+            class="form__input form__input--duration"
+            type="number"
+            placeholder="min"
+            min="1"
+            required
+          />
+        </div>
+        <div class="form__row">
+          <label class="form__label">Cadence</label>
+          <input
+            class="form__input form__input--cadence form__input--validate"
+            type="number"
+            min="1"
+            placeholder="step/min"
+            required
+          />
+        </div>
+        <div class="form__row form__row--hidden">
+          <label class="form__label">Elev Gain</label>
+          <input
+            class="form__input form__input--elevation form__input--validate"
+            type="number"
+            placeholder="meters"
+            required
+          />
+        </div>
+        <button class="form__btn">OK</button>
+    </form>
+    `;
+    el.insertAdjacentHTML('beforeend', html);
+
+    
   }
 }
 
