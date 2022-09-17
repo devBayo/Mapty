@@ -286,7 +286,6 @@ class App {
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
-    console.log(data);
 
     this.#workouts = data;
     this.#workouts.forEach(work => {
@@ -300,9 +299,7 @@ class App {
     location.reload();
   }
 
-  _editWork() {
-    
-  }
+  _editWork() {}
 }
 
 const app = new App();
