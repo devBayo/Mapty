@@ -218,3 +218,20 @@ a:visited {
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+
+/* Quickk styles */
+li {
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+  background-color: aquamarine;
+  top: 3px;
+  right: 5px;
+  padding: 1px 3px;
+  color: #000;
+  cursor: pointer;
+  border: unset;
+  background-color: var(--color-brand--2);
+}

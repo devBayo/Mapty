@@ -7,6 +7,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const editButton = document.querySelector('.edit-button');
 
 class Workout {
   date = new Date();
@@ -93,6 +94,7 @@ class App {
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
 
   _getPosition() {
@@ -286,7 +288,6 @@ class App {
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
-    console.log(data);
 
     this.#workouts = data;
     this.#workouts.forEach(work => {
@@ -296,12 +297,21 @@ class App {
   }
 
   reset() {
+    // reset database
     localStorage.removeItem('workouts');
     location.reload();
   }
 
-  _editWork() {
-    
+  _editWork(e) {
+    // Select workout
+    if (!e.target.classList.contains('edit-button')) return;
+    const button = e.target;
+    const workoutEl = button.closest('.workout');
+    console.log(workoutEl);
+
+    // Display edit foorm
+    this._showForm();
+    console.log((inputDistance.value = 2));
   }
 }
 
