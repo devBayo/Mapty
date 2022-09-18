@@ -100,16 +100,10 @@ class App {
     // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     /* End */
 
-    // editForm.addEventListener('click', () => console.log('change'));
-
-    containerWorkouts.addEventListener('click', function (e) {
-      const inputTypeEdit = document.querySelector('.form__input--type--edit');
-
-      if (e.target === inputTypeEdit) {
-        console.log(inputTypeEdit);
-        // inputTypeEdit.addEventListener('change', )
-      }
-    });
+    containerWorkouts.addEventListener(
+      'click',
+      this._togglePreviousElevationField.bind(this)
+    );
 
     containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
@@ -158,10 +152,9 @@ class App {
     setTimeout(() => (form.style.display = 'grid'), 1000);
   }
 
-  _toggleElevationField() {
-    console.log(1);
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+  _toggleElevationField(cadence = inputCadence, elevation = inputElevation) {
+    cadence.closest('.form__row').classList.toggle('form__row--hidden');
+    elevation.closest('.form__row').classList.toggle('form__row--hidden');
     this._preventHtmlError();
   }
 
@@ -414,6 +407,36 @@ class App {
       .querySelector('.workout__value').textContent;
 
     return { distance, duration, cadenceOrGain };
+  }
+
+  _previousWorkoutForm() {
+    const inputTypeEdit = document.querySelector('.form__input--type--edit');
+    const inputCadenceEdit = document.querySelector(
+      '.form__input--cadence--edit'
+    );
+    const inputElevationEdit = document.querySelector(
+      '.form__input--elevation--edit'
+    );
+
+    return { inputTypeEdit, inputCadenceEdit, inputElevationEdit };
+  }
+
+  _togglePreviousElevationField(e) {
+    const { inputTypeEdit, inputCadenceEdit, inputElevationEdit } =
+      this._previousWorkoutForm();
+
+    if (e.target === inputTypeEdit) {
+      console.log(inputTypeEdit);
+
+      inputTypeEdit.addEventListener(
+        'change',
+        this._toggleElevationField.call(
+          this,
+          inputCadenceEdit,
+          inputElevationEdit
+        )
+      );
+    }
   }
 }
 
