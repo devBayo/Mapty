@@ -325,9 +325,7 @@ class App {
     if (!e.target.classList.contains('edit-button')) return;
     const workoutEl = e.target.closest('.workout');
 
-    // Display edit foorm
-    // this._showForm();
-    // console.log((inputDistance.value = 2));
+    // Display edit form
     this._renderEditForm(workoutEl);
   }
 
@@ -336,7 +334,7 @@ class App {
       this._previousWorkoutContent(el);
 
     const html = `
-      <form class="form form--edit">
+      <form class="form form--edit hidden">
         <div class="form__row">
           <label class="form__label">Type</label>
           <select class="form__input form__input--type form__input--type--edit">
@@ -391,6 +389,13 @@ class App {
     </form>
     `;
     el.insertAdjacentHTML('beforeend', html);
+    const editForm = document.querySelector('.form--edit');
+    editForm.classList.remove('hidden');
+
+    editForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      editForm.classList.add('hidden');
+    });
   }
 
   _previousWorkoutContent(el) {
