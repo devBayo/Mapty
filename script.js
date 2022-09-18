@@ -11,6 +11,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 // Challenge
 const editButton = document.querySelector('.edit-button');
 
+// Main Class 'Workout'
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
@@ -40,6 +41,7 @@ class Workout {
   }
 }
 
+// Child class of workout
 class Running extends Workout {
   type = 'running';
 
@@ -57,6 +59,7 @@ class Running extends Workout {
   }
 }
 
+// Child class of workout
 class Cycling extends Workout {
   type = 'cycling';
 
@@ -77,6 +80,7 @@ class Cycling extends Workout {
 /////////////////////////
 // Applying Architechture
 class App {
+  // Fields
   #map;
   #mapEvent;
   #mapZoomLevel = 13;
@@ -161,7 +165,7 @@ class App {
     this._preventHtmlError();
   }
 
-  _hideElvationField() {
+  _hideElevationField() {
     inputCadence.closest('.form__row').classList.remove('form__row--hidden');
     inputElevation.closest('.form__row').classList.add('form__row--hidden');
   }
@@ -203,7 +207,7 @@ class App {
     this._hideForm();
 
     // Hide elevationField
-    this._hideElvationField();
+    this._hideElevationField();
 
     // Store workouts in local storage
     this._setLocalStorage();
@@ -217,19 +221,19 @@ class App {
     const html = `
       <li class="workout workout--${type}" data-id="${id}">
         <h2 class="workout__title">${description}</h2>
-          <div class="workout__details">
+          <div class="workout__details workout__details--distance">
             <span class="workout__icon">${
               type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
             }</span>
             <span class="workout__value">${distance}</span>
             <span class="workout__unit">km</span>
           </div>
-          <div class="workout__details">
+          <div class="workout__details workout__details--time">
             <span class="workout__icon">⏱</span>
             <span class="workout__value">${duration}</span>
             <span class="workout__unit">min</span>
           </div>
-          <div class="workout__details">
+          <div class="workout__details workout__details--cadenceorgain">
             <span class="workout__icon">⚡️</span>
             <span class="workout__value">${
               type === 'running' ? cadence : elevationGain
