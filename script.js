@@ -103,7 +103,8 @@ class App {
         this._loadMap.bind(this),
         function () {
           // Uncomment later
-          // alert('Could not get your position');
+          console.log(this);
+          alert('Could not get your position');
         }
       );
   }
@@ -201,38 +202,38 @@ class App {
       elevationGain, pace,speed, description} = workout;
 
     const html = `
-    <li class="workout workout--${type}" data-id="${id}">
-      <h2 class="workout__title">${description}</h2>
-        <div class="workout__details">
-          <span class="workout__icon">${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}</span>
-          <span class="workout__value">${distance}</span>
-          <span class="workout__unit">km</span>
-        </div>
-        <div class="workout__details">
-          <span class="workout__icon">⏱</span>
-          <span class="workout__value">${duration}</span>
-          <span class="workout__unit">min</span>
-        </div>
-        <div class="workout__details">
-          <span class="workout__icon">⚡️</span>
-          <span class="workout__value">${
-            type === 'running' ? cadence : elevationGain
-          }</span>
-          <span class="workout__unit">${
-            type === 'running' ? 'min/km' : 'km/h'
-          }</span>
-        </div>
-        <div class="workout__details">
-          <span class="workout__icon">${type === 'running' ? '🦶🏼' : '⛰'}</span>
-          <span class="workout__value">${
-            type === 'running' ? pace.toFixed(1) : speed.toFixed(1)
-          }</span>
-          <span class="workout__unit">${type === 'running' ? 'spm' : 'm'}</span>
-        </div>
+      <li class="workout workout--${type}" data-id="${id}">
+        <h2 class="workout__title">${description}</h2>
+          <div class="workout__details">
+            <span class="workout__icon">${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}</span>
+            <span class="workout__value">${distance}</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">${duration}</span>
+            <span class="workout__unit">min</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">${
+              type === 'running' ? cadence : elevationGain
+            }</span>
+            <span class="workout__unit">${
+              type === 'running' ? 'min/km' : 'km/h'
+            }</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">${type === 'running' ? '🦶🏼' : '⛰'}</span>
+            <span class="workout__value">${
+              type === 'running' ? pace.toFixed(1) : speed.toFixed(1)
+            }</span>
+            <span class="workout__unit">${type === 'running' ? 'spm' : 'm'}</span>
+          </div>
 
-        <button class="edit-button">Edit</button>
-      </li>
-    `;
+          <button class="edit-button">Edit</button>
+        </li>
+      `;
 
     form.insertAdjacentHTML('afterend', html);
   }
@@ -306,8 +307,7 @@ class App {
   _editWork(e) {
     // Select workout
     if (!e.target.classList.contains('edit-button')) return;
-    const button = e.target;
-    const workoutEl = button.closest('.workout');
+    const workoutEl = e.target.closest('.workout');
     console.log(workoutEl);
 
     // Display edit foorm
@@ -369,8 +369,6 @@ class App {
     </form>
     `;
     el.insertAdjacentHTML('beforeend', html);
-
-    
   }
 }
 
