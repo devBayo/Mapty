@@ -9,7 +9,6 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
 // Challenge
-let editForm;
 const editButton = document.querySelector('.edit-button');
 
 class Workout {
@@ -100,6 +99,17 @@ class App {
     /* Uncomment Later */
     // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     /* End */
+
+    // editForm.addEventListener('click', () => console.log('change'));
+
+    containerWorkouts.addEventListener('click', function (e) {
+      const inputTypeEdit = document.querySelector('.form__input--type--edit');
+
+      if (e.target === inputTypeEdit) {
+        console.log(inputTypeEdit);
+        // inputTypeEdit.addEventListener('change', )
+      }
+    });
 
     containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
@@ -331,8 +341,6 @@ class App {
   _renderEditForm(el) {
     const { distance, duration, cadenceOrGain } =
       this._previousWorkoutContent(el);
-
-    console.log(distance, duration, cadenceOrGain);
 
     const html = `
       <form class="form form--edit">
