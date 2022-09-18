@@ -93,7 +93,9 @@ class App {
     document
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
-    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+
+    /* Uncomment later */
+    // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
 
@@ -363,6 +365,7 @@ class App {
             type="number"
             min="1"
             placeholder="step/min"
+            value=${cadenceOrGain}
             required
           />
         </div>
@@ -372,6 +375,7 @@ class App {
             class="form__input form__input--elevation form__input--elevation--edit form__input--validate"
             type="number"
             placeholder="meters"
+            value=${cadenceOrGain}
             required
           />
         </div>
