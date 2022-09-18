@@ -321,12 +321,8 @@ class App {
   }
 
   _renderEditForm(el) {
-    console.log(el);
-    const distance = el
-      .querySelector('.workout__details--distance')
-      .querySelector('.workout__value').textContent;
-
-    console.log(distance);
+    const { distance, time } = this._previousWorkoutContent(el);
+    console.log(distance, time);
 
     const html = `
       <form class="form form--edit">
@@ -344,6 +340,7 @@ class App {
             type="number"
             min="1"
             placeholder="km"
+            value=${distance}
             required
           />
         </div>
@@ -353,6 +350,7 @@ class App {
             class="form__input form__input--duration form__input--duration--edit"
             type="number"
             placeholder="min"
+            value=${time}
             min="1"
             required
           />
@@ -380,6 +378,18 @@ class App {
     </form>
     `;
     el.insertAdjacentHTML('beforeend', html);
+  }
+
+  _previousWorkoutContent(el) {
+    const distance = el
+      .querySelector('.workout__details--distance')
+      .querySelector('.workout__value').textContent;
+
+    const time = el
+      .querySelector('.workout__details--time')
+      .querySelector('.workout__value').textContent;
+
+    return { distance, time };
   }
 }
 
