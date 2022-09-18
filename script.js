@@ -321,8 +321,9 @@ class App {
   }
 
   _renderEditForm(el) {
-    const { distance, time } = this._previousWorkoutContent(el);
-    console.log(distance, time);
+    const { distance, time, cadenceOrGain } = this._previousWorkoutContent(el);
+
+    console.log(distance, time, cadenceOrGain);
 
     const html = `
       <form class="form form--edit">
@@ -389,7 +390,11 @@ class App {
       .querySelector('.workout__details--time')
       .querySelector('.workout__value').textContent;
 
-    return { distance, time };
+    const cadenceOrGain = el
+      .querySelector('.workout__details--cadenceorgain')
+      .querySelector('.workout__value').textContent;
+
+    return { distance, time, cadenceOrGain };
   }
 }
 
