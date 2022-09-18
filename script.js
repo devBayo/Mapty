@@ -94,8 +94,10 @@ class App {
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
 
-    /* Uncomment later */
+    /* Uncomment Later */
     // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    /* End */
+
     containerWorkouts.addEventListener('click', this._editWork.bind(this));
   }
 
