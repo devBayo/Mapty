@@ -7,6 +7,9 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+
+// Challenge
+let editForm;
 const editButton = document.querySelector('.edit-button');
 
 class Workout {
@@ -146,6 +149,7 @@ class App {
   }
 
   _toggleElevationField() {
+    console.log(1);
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
     this._preventHtmlError();
