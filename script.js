@@ -91,7 +91,10 @@ class App {
 
     // Event Listeners
     form.addEventListener('submit', this._newWorkout.bind(this));
-    inputType.addEventListener('change', this._toggleElevationField.bind(this));
+    inputType.addEventListener(
+      'change',
+      this._toggleElevationField.call(this, inputCadence, inputElevation)
+    );
     document
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
@@ -152,7 +155,7 @@ class App {
     setTimeout(() => (form.style.display = 'grid'), 1000);
   }
 
-  _toggleElevationField(cadence = inputCadence, elevation = inputElevation) {
+  _toggleElevationField(cadence, elevation) {
     cadence.closest('.form__row').classList.toggle('form__row--hidden');
     elevation.closest('.form__row').classList.toggle('form__row--hidden');
     this._preventHtmlError();
