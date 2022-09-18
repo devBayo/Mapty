@@ -103,8 +103,7 @@ class App {
         this._loadMap.bind(this),
         function () {
           // Uncomment later
-          console.log(this);
-          alert('Could not get your position');
+          // alert('Could not get your position');
         }
       );
   }
@@ -205,7 +204,9 @@ class App {
       <li class="workout workout--${type}" data-id="${id}">
         <h2 class="workout__title">${description}</h2>
           <div class="workout__details">
-            <span class="workout__icon">${type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}</span>
+            <span class="workout__icon">${
+              type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
+            }</span>
             <span class="workout__value">${distance}</span>
             <span class="workout__unit">km</span>
           </div>
@@ -224,11 +225,15 @@ class App {
             }</span>
           </div>
           <div class="workout__details">
-            <span class="workout__icon">${type === 'running' ? '🦶🏼' : '⛰'}</span>
+            <span class="workout__icon">${
+              type === 'running' ? '🦶🏼' : '⛰'
+            }</span>
             <span class="workout__value">${
               type === 'running' ? pace.toFixed(1) : speed.toFixed(1)
             }</span>
-            <span class="workout__unit">${type === 'running' ? 'spm' : 'm'}</span>
+            <span class="workout__unit">${
+              type === 'running' ? 'spm' : 'm'
+            }</span>
           </div>
 
           <button class="edit-button">Edit</button>
@@ -308,7 +313,6 @@ class App {
     // Select workout
     if (!e.target.classList.contains('edit-button')) return;
     const workoutEl = e.target.closest('.workout');
-    console.log(workoutEl);
 
     // Display edit foorm
     // this._showForm();
@@ -317,11 +321,18 @@ class App {
   }
 
   _renderEditForm(el) {
+    console.log(el);
+    const distance = el
+      .querySelector('.workout__details--distance')
+      .querySelector('.workout__value').textContent;
+
+    console.log(distance);
+
     const html = `
       <form class="form form--edit">
         <div class="form__row">
           <label class="form__label">Type</label>
-          <select class="form__input form__input--type">
+          <select class="form__input form__input--type form__input--type--edit">
             <option value="running">Running</option>
             <option value="cycling">Cycling</option>
           </select>
@@ -329,7 +340,7 @@ class App {
         <div class="form__row">
           <label class="form__label">Distance</label>
           <input
-            class="form__input form__input--distance"
+            class="form__input form__input--distance form__input--distance--edit"
             type="number"
             min="1"
             placeholder="km"
@@ -339,7 +350,7 @@ class App {
         <div class="form__row">
           <label class="form__label">Duration</label>
           <input
-            class="form__input form__input--duration"
+            class="form__input form__input--duration form__input--duration--edit"
             type="number"
             placeholder="min"
             min="1"
@@ -349,7 +360,7 @@ class App {
         <div class="form__row">
           <label class="form__label">Cadence</label>
           <input
-            class="form__input form__input--cadence form__input--validate"
+            class="form__input form__input--cadence form__input--cadence--edit form__input--validate"
             type="number"
             min="1"
             placeholder="step/min"
@@ -359,7 +370,7 @@ class App {
         <div class="form__row form__row--hidden">
           <label class="form__label">Elev Gain</label>
           <input
-            class="form__input form__input--elevation form__input--validate"
+            class="form__input form__input--elevation form__input--elevation--edit form__input--validate"
             type="number"
             placeholder="meters"
             required
