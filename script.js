@@ -97,22 +97,26 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener(
       'change',
-      this._toggleElevationField.call(this, inputCadence, inputElevation)
+      this._toggleElevationField.bind(this, inputCadence, inputElevation)
     );
+
     document
       .querySelector('#map')
       .addEventListener('click', this._preventHtmlError.bind(this));
 
-    /* Uncomment Later */
-    // containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-    /* End */
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
 
-    containerWorkouts.addEventListener(
-      'click',
-      this._togglePreviousElevationField.bind(this)
-    );
+    // review
+    // containerWorkouts.addEventListener(
+    //   'click',
+    //   this._togglePreviousElevationField.bind(this)
+    // );
 
     containerWorkouts.addEventListener('click', this._editWork.bind(this));
+  }
+
+  getWorkouts() {
+    return this.#workouts;
   }
 
   _getPosition() {
@@ -337,7 +341,7 @@ class App {
   }
 
   _renderEditForm(el) {
-    const { distance, duration, cadenceOrGain } =
+    let { distance, duration, cadenceOrGain } =
       this._previousWorkoutContent(el);
 
     const html = `
@@ -356,7 +360,7 @@ class App {
             type="number"
             min="1"
             placeholder="km"
-            value=${distance}
+            value=${distance.textContent}
             required
           />
         </div>
@@ -366,7 +370,7 @@ class App {
             class="form__input form__input--duration form__input--duration--edit"
             type="number"
             placeholder="min"
-            value=${duration}
+            value=${duration.textContent}
             min="1"
             required
           />
@@ -378,7 +382,7 @@ class App {
             type="number"
             min="1"
             placeholder="step/min"
-            value=${cadenceOrGain}
+            value=${cadenceOrGain.textContent}
             required
           />
         </div>
@@ -388,7 +392,7 @@ class App {
             class="form__input form__input--elevation form__input--elevation--edit form__input--validate"
             type="number"
             placeholder="meters"
-            value=${cadenceOrGain}
+            value=${cadenceOrGain.textContent}
             required
           />
         </div>
@@ -401,6 +405,15 @@ class App {
 
     editForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      distance.textContent = editForm.querySelector(
+        '.form__input--distance--edit'
+      ).value;
+      duration.textContent = editForm.querySelector(
+        '.form__input--duration--edit'
+      ).value;
+      // cadenceOrGain.textContent = editForm.querySelector(
+      //   '.form__input--distance--edit'
+      // ).value;
       editForm.classList.add('hidden');
     });
   }
@@ -408,19 +421,20 @@ class App {
   _previousWorkoutContent(el) {
     const distance = el
       .querySelector('.workout__details--distance')
-      .querySelector('.workout__value').textContent;
+      .querySelector('.workout__value');
 
     const duration = el
       .querySelector('.workout__details--time')
-      .querySelector('.workout__value').textContent;
+      .querySelector('.workout__value');
 
     const cadenceOrGain = el
       .querySelector('.workout__details--cadenceorgain')
-      .querySelector('.workout__value').textContent;
+      .querySelector('.workout__value');
 
     return { distance, duration, cadenceOrGain };
   }
 
+  // review
   _previousWorkoutForm() {
     const inputTypeEdit = document.querySelector('.form__input--type--edit');
     const inputCadenceEdit = document.querySelector(
@@ -438,11 +452,10 @@ class App {
       this._previousWorkoutForm();
 
     if (e.target === inputTypeEdit) {
-      console.log(inputTypeEdit);
-
+      console.log(e.target === inputTypeEdit);
       inputTypeEdit.addEventListener(
         'change',
-        this._toggleElevationField.call(
+        this._toggleElevationField.bind(
           this,
           inputCadenceEdit,
           inputElevationEdit
